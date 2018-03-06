@@ -157,7 +157,7 @@ public class Validator {
 			Iterator<CSVRecord> iterator = parser.iterator();
 			while(iterator.hasNext()) {
 				// for the moment do nothing as we do not need the values
-				System.out.println(iterator.next());
+				iterator.next();
 			}
 			parser.close();
 			reader.close();
@@ -228,13 +228,12 @@ public class Validator {
 				File xml = null;
 				try {
 					// Create temp file.
-					xml = File.createTempFile("" + id, ".xml");
+					xml = File.createTempFile("datadescrp" + id, ".xml");
 					xml.deleteOnExit();
 					// Write to temp file
 					BufferedWriter out = new BufferedWriter(new FileWriter(xml));
 					out.write(XstreamXmlMapping.getInstance().toXML(datasetDescription));
 					out.close();
-					
 				} catch(IOException e) {
 					logger.logToFile("Could not create xml file " + e.toString());
 					throw e;
