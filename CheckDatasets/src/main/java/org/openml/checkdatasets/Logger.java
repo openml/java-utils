@@ -7,6 +7,12 @@ import java.util.Date;
 
 import org.openml.checkdatasets.utils.Config;
 
+/**
+ * @author Arlind Kadra
+ *
+ * Simple class which will log the results/errors.
+ */
+
 public class Logger {
 	
 	private static Logger instance;

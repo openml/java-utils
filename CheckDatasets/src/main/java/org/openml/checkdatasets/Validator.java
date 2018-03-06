@@ -32,15 +32,17 @@ import org.xml.sax.SAXException;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
 
-/*
+/**
+ * @author Arlind Kadra
+ * 
  * The validator class will check if the datasets fullfill certain requirements.
  */
+
 public class Validator {
 	
 	private final static String XSDSCHEMA = "openml.data.upload";
 	private OpenmlConnector connector;
 	private Logger logger;
-	private File xsdSchema;
 	// data type values.
 	private enum Type {nominal, string, date, numeric};
 	
@@ -56,6 +58,7 @@ public class Validator {
 	 * @throws Exception
 	 */
 	public void performAllChecks() throws Exception {
+		
 		
 		ArrayList<Integer> ids = getListUniqueDatasetIds();
 		this.checkARFF(ids);
@@ -221,7 +224,7 @@ public class Validator {
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append("Info - Could not be validated on schema: ");
-		xsdSchema = connector.getXSD(XSDSCHEMA);
+		File xsdSchema = connector.getXSD(XSDSCHEMA);
 		if(xsdSchema != null) {
 			for(Integer id: ids) {
 				DataSetDescription datasetDescription = connector.dataGet(id);
@@ -239,7 +242,7 @@ public class Validator {
 					throw e;
 				}
 				if(xml != null) {
-					if(!(validateDatasetOnSchema(xml))) {
+					if(!(validateDatasetOnSchema(xml, xsdSchema))) {
 						builder.append(id + ", ");
 					}
 				}
@@ -255,10 +258,10 @@ public class Validator {
 	 * @param xml - xml file.
 	 * @return - true if validation succeeds, false if it does not.
 	 */
-	protected boolean validateDatasetOnSchema(File xml) {
+	protected boolean validateDatasetOnSchema(File xml, File xsd) {
 		
 		try {
-			return Conversion.validateXML(xml, xsdSchema);
+			return Conversion.validateXML(xml, xsd);
 		} catch (IOException | SAXException e1) {
 			// Do nothing, validation failed on the xml file. False will be returned.
 			return false;

@@ -8,8 +8,11 @@ import java.util.HashMap;
 
 import org.openml.checkdatasets.Logger;
 
-// Class use to retrieve and provide possible configuration parameters.
-
+/**
+ * @author Arlind Kadra
+ *
+ * Class use to retrieve and provide possible configuration parameters.
+ */
 public class Config {
 
 	private final String DIR = System.getProperty("user.dir");
